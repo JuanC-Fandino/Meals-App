@@ -1,13 +1,13 @@
 class Meal {
-  private id: string;
-  private categoryIds: string[];
-  private imageUrl: string;
-  private title: string;
+  id: string;
+  categoryIds: string[];
+  imageUrl: string;
+  title: string;
   private ingredients: string[];
   private steps: string[];
-  private duration: number;
-  private complexity: string;
-  private affordability: string;
+  duration: number;
+  complexity: string;
+  affordability: string;
   private isGlutenFree: boolean;
   private isVegan: boolean;
   private isVegetarian: boolean;

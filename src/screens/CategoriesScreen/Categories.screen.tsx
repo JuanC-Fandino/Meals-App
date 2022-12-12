@@ -1,7 +1,6 @@
 /* react imports */
 import React from 'react';
 import { FlatList, View } from 'react-native';
-import { CategoriesStyle } from './Categories.style';
 import { CATEGORIES } from '../../data/data';
 import CategoryGridTile from '../../components/CategoryGridTile';
 import Category from '../../models/category';
@@ -22,7 +21,13 @@ const CategoriesScreen = (): JSX.Element => {
     separators: object;
   }) {
     function onPressHandler() {
-      navigate('Meals Overview' as never);
+      navigate(
+        'Meals' as never,
+        {
+          categoryId: itemData.item.id,
+          title: itemData.item.title,
+        } as never,
+      );
     }
 
     return (
