@@ -3,8 +3,8 @@ class Meal {
   categoryIds: string[];
   imageUrl: string;
   title: string;
-  private ingredients: string[];
-  private steps: string[];
+  ingredients: string[];
+  steps: string[];
   duration: number;
   complexity: string;
   affordability: string;

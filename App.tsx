@@ -9,12 +9,7 @@
  */
 
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  useColorScheme,
-} from 'react-native';
+import { StatusBar, StyleSheet, Text, useColorScheme } from 'react-native';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import CategoriesScreen from './src/screens/CategoriesScreen';
@@ -22,8 +17,46 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MealsOverviewScreenScreen from './src/screens/MealsOverviewScreen/MealsOverview.screen';
 import MealDetails from './src/screens/MealDetails';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import FavoritesScreen from './src/screens/FavoritesScreen';
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        // sceneContainerStyle: { backgroundColor: 'black' },
+        headerStyle: { backgroundColor: 'green' },
+        headerTintColor: 'white',
+        drawerContentStyle: { backgroundColor: 'darkgreen' },
+        drawerActiveBackgroundColor: 'lightgreen',
+        drawerInactiveTintColor: 'white',
+        drawerActiveTintColor: 'darkgreen',
+      }}>
+      <Drawer.Screen
+        name={'Categories'}
+        component={CategoriesScreen}
+        options={{
+          title: 'All Categories',
+          drawerIcon: ({ color, size }) => (
+            <Text style={{ fontSize: size, color: color }}>{'📝'}</Text>
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name={'Favorites'}
+        component={FavoritesScreen}
+        options={{
+          drawerIcon: ({ color, size }) => (
+            <Text style={{ fontSize: size, color: color }}>{'⭐'}</Text>
+          ),
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
 
 const App = () => {
   /* When setting up a Navigator (like <Stack.Navigator>) and registering its
@@ -51,15 +84,15 @@ const App = () => {
         <Stack.Navigator
           initialRouteName={'Categories'}
           screenOptions={{
-            headerStyle: { backgroundColor: 'orange' },
+            headerStyle: { backgroundColor: 'green' },
             headerTintColor: 'white', // Also affects the back button
             // contentStyle: { backgroundColor: 'black' },
           }}>
           <Stack.Screen
-            name="Categories"
-            component={CategoriesScreen}
+            name="Categories2"
+            component={DrawerNavigator}
             options={{
-              title: 'All Categories',
+              headerShown: false,
             }}
           />
           <Stack.Screen

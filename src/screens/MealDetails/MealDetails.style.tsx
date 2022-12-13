@@ -3,10 +3,12 @@ import { StyleSheet } from 'react-native';
 export const MealDetailsStyle = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 16,
   },
   image: {
     width: '100%',
     height: 200,
+    borderRadius: 8,
   },
   title: {
     fontWeight: 'bold',
@@ -45,5 +47,17 @@ export const MealDetailsStyle = StyleSheet.create({
 
   buttonPressed: {
     opacity: 0.5,
+  },
+  dividerContainer: {
+    marginBottom: 16,
+    paddingTop: 4,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+  },
+  listOuterContainer: {
+    marginVertical: 4,
+    backgroundColor: 'lightgray',
+    borderRadius: 8,
+    padding: 8,
   },
 });
