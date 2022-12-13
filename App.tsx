@@ -9,7 +9,7 @@
  */
 
 import React from 'react';
-import { StatusBar, StyleSheet, Text, useColorScheme } from 'react-native';
+import { StatusBar, Text, useColorScheme } from 'react-native';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import CategoriesScreen from './src/screens/CategoriesScreen';
@@ -19,7 +19,9 @@ import MealsOverviewScreenScreen from './src/screens/MealsOverviewScreen/MealsOv
 import MealDetails from './src/screens/MealDetails';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FavoritesScreen from './src/screens/FavoritesScreen';
-import FavoritesContextProvider from './src/store/context/favorites-context';
+// import FavoritesContextProvider from './src/store/context/favorites-context';
+import { Provider } from 'react-redux';
+import { store } from './src/store/redux/store';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -81,7 +83,8 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <FavoritesContextProvider>
+      {/*<FavoritesContextProvider>*/}
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator
             initialRouteName={'Categories'}
@@ -110,11 +113,10 @@ const App = () => {
           {/*<CategoriesScreen />*/}
           {/*</SafeAreaView>*/}
         </NavigationContainer>
-      </FavoritesContextProvider>
+      </Provider>
+      {/*</FavoritesContextProvider>*/}
     </>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default App;

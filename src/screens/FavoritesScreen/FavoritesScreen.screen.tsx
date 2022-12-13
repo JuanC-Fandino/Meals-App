@@ -1,16 +1,12 @@
 /* react imports */
-import React, { useContext } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 import { FavoritesScreenStyle } from './FavoritesScreen.style';
 import MealsList from '../../components/MealsList';
-import { FavoritesContext } from '../../store/context/favorites-context';
+// import { FavoritesContext } from '../../store/context/favorites-context';
 import { MEALS } from '../../data/data';
-/* 3rd-party dependency imports */
-/* UI components */
-/* store */
-/* hooks */
-/* constants & types */
-/* utils */
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/redux/store';
 
 /**
  * @page FavoritesScreen
@@ -18,16 +14,20 @@ import { MEALS } from '../../data/data';
  */
 const FavoritesScreen = (): JSX.Element => {
   /* props & state */
-  const favoriteMealsContext = useContext(FavoritesContext);
+  // const favoriteMealsContext = useContext(FavoritesContext);
+  const favoriteMealsIds = useSelector(
+    (state: RootState) => state.favorites.ids,
+  );
 
   const favoriteMeals = MEALS.filter(meal =>
-    favoriteMealsContext.ids.includes(meal.id),
+    // favoriteMealsContext.ids.includes(meal.id),
+    favoriteMealsIds.includes(meal.id),
   );
 
   return (
     <View style={FavoritesScreenStyle.container} data-testid="favorites-screen">
       {favoriteMeals.length > 0 ? (
-        <MealsList displayedMeals={favoriteMeals}></MealsList>
+        <MealsList displayedMeals={favoriteMeals} />
       ) : (
         <Text style={FavoritesScreenStyle.emptyStyle}>
           {'No favorites yet'}

@@ -1,12 +1,15 @@
 /* react imports */
-import React, { useContext, useLayoutEffect } from 'react';
-import { Button, Image, ScrollView, Text, View } from 'react-native';
+import React, { useLayoutEffect } from 'react';
+import { Image, ScrollView, Text, View } from 'react-native';
 import { MealDetailsStyle } from './MealDetails.style';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MEALS } from '../../data/data';
 import MealDetails from '../../components/MealDetails/MealDetails';
 import IconButton from '../../components/IconButton';
-import { FavoritesContext } from '../../store/context/favorites-context';
+// import { FavoritesContext } from '../../store/context/favorites-context';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFavorite, removeFavorite } from '../../store/redux/favorites';
+import { RootState } from '../../store/redux/store';
 
 /**
  * @page MealDetails
@@ -15,28 +18,36 @@ import { FavoritesContext } from '../../store/context/favorites-context';
 const MealDetailsScreen = (): JSX.Element => {
   const navigate = useNavigation();
   const route = useRoute();
-  const favoriteMealsCtx = useContext(FavoritesContext);
+  // const favoriteMealsCtx = useContext(FavoritesContext);
+
+  // REDUX
+  const favoriteMealsIds = useSelector(
+    (state: RootState) => state.favorites.ids,
+  );
+  const dispatch = useDispatch();
 
   const mealId = route.params.mealId;
   const mealTitle = route.params.mealTitle;
-  const mealIsFavorite = favoriteMealsCtx.ids.includes(mealId);
+  // const mealIsFavorite = favoriteMealsCtx.ids.includes(mealId);
+  const mealIsFavorite = favoriteMealsIds.includes(mealId);
 
   const TheMeal = MEALS.find(Meal => {
     return Meal.id === mealId;
   });
 
-  function handleFavorite() {
-    // It changes the favorite state
-    if (mealIsFavorite) {
-      favoriteMealsCtx.removeFavorite(mealId);
-    } else {
-      favoriteMealsCtx.addFavorite(mealId);
-    }
-  }
-
   useLayoutEffect(() => {
     if (!route.params) {
       navigate.goBack();
+    }
+    function handleFavorite() {
+      // It changes the favorite state
+      if (mealIsFavorite) {
+        // favoriteMealsCtx.removeFavorite(mealId);
+        dispatch(removeFavorite({ id: mealId }));
+      } else {
+        // favoriteMealsCtx.addFavorite(mealId);
+        dispatch(addFavorite({ id: mealId }));
+      }
     }
     navigate.setOptions({
       title: mealTitle,
@@ -47,7 +58,7 @@ const MealDetailsScreen = (): JSX.Element => {
         />
       ),
     });
-  }, [route.params, navigate, mealTitle, mealIsFavorite, handleFavorite]);
+  }, [route.params, navigate, mealTitle, mealIsFavorite, dispatch, mealId]);
 
   if (TheMeal === undefined) {
     return <Text>{'There is no meal'}</Text>;
