@@ -4,12 +4,6 @@ import { View, Text, Pressable, Image } from 'react-native';
 import Meal from '../../models/meal';
 import { MealItemStyle } from './MealItem.style';
 import MealDetails from '../MealDetails/MealDetails';
-/* 3rd-party dependency imports */
-/* UI components */
-/* store */
-/* hooks */
-/* constants & types */
-/* utils */
 
 export interface Props {
   TheMeal: Meal;

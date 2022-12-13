@@ -6,11 +6,12 @@ import { IconButtonStyle } from './IconButton.style';
 export interface Props {
   customStyle?: StyleProp<ViewStyle>;
   onPress: () => void;
+  icon: string;
 }
 
 const IconButton = (props: Props) => {
   /* props & state */
-  const { onPress, customStyle } = props;
+  const { onPress, customStyle, icon } = props;
 
   /* Functions & Callbacks */
   /* Side Effects & Event Listeners */
@@ -22,7 +23,7 @@ const IconButton = (props: Props) => {
       <Pressable
         style={({ pressed }) => pressed && IconButtonStyle.pressed}
         onPress={onPress}>
-        <Text style={IconButtonStyle.text}>{'⭐'}</Text>
+        <Text style={IconButtonStyle.text}>{icon}</Text>
       </Pressable>
     </View>
   );

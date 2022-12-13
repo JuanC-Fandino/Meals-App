@@ -1,11 +1,12 @@
 /* react imports */
-import React, { useLayoutEffect } from 'react';
+import React, { useContext, useLayoutEffect } from 'react';
 import { Button, Image, ScrollView, Text, View } from 'react-native';
 import { MealDetailsStyle } from './MealDetails.style';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { MEALS } from '../../data/data';
 import MealDetails from '../../components/MealDetails/MealDetails';
 import IconButton from '../../components/IconButton';
+import { FavoritesContext } from '../../store/context/favorites-context';
 
 /**
  * @page MealDetails
@@ -14,17 +15,23 @@ import IconButton from '../../components/IconButton';
 const MealDetailsScreen = (): JSX.Element => {
   const navigate = useNavigation();
   const route = useRoute();
+  const favoriteMealsCtx = useContext(FavoritesContext);
 
   const mealId = route.params.mealId;
   const mealTitle = route.params.mealTitle;
+  const mealIsFavorite = favoriteMealsCtx.ids.includes(mealId);
 
   const TheMeal = MEALS.find(Meal => {
     return Meal.id === mealId;
   });
 
   function handleFavorite() {
-    console.log('here');
-    return '';
+    // It changes the favorite state
+    if (mealIsFavorite) {
+      favoriteMealsCtx.removeFavorite(mealId);
+    } else {
+      favoriteMealsCtx.addFavorite(mealId);
+    }
   }
 
   useLayoutEffect(() => {
@@ -33,9 +40,14 @@ const MealDetailsScreen = (): JSX.Element => {
     }
     navigate.setOptions({
       title: mealTitle,
-      headerRight: () => <IconButton onPress={handleFavorite} />,
+      headerRight: () => (
+        <IconButton
+          icon={mealIsFavorite ? '❌' : '⭐'}
+          onPress={handleFavorite}
+        />
+      ),
     });
-  }, [route.params, navigate, mealTitle]);
+  }, [route.params, navigate, mealTitle, mealIsFavorite, handleFavorite]);
 
   if (TheMeal === undefined) {
     return <Text>{'There is no meal'}</Text>;

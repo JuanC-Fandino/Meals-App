@@ -19,6 +19,7 @@ import MealsOverviewScreenScreen from './src/screens/MealsOverviewScreen/MealsOv
 import MealDetails from './src/screens/MealDetails';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import FavoritesScreen from './src/screens/FavoritesScreen';
+import FavoritesContextProvider from './src/store/context/favorites-context';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -80,34 +81,36 @@ const App = () => {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={'Categories'}
-          screenOptions={{
-            headerStyle: { backgroundColor: 'green' },
-            headerTintColor: 'white', // Also affects the back button
-            // contentStyle: { backgroundColor: 'black' },
-          }}>
-          <Stack.Screen
-            name="Categories2"
-            component={DrawerNavigator}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name={'Meals'}
-            component={MealsOverviewScreenScreen}
-            // options={({ route, navigation }) => {
-            //   return { title: route.params.title };
-            // }}
-          />
-          <Stack.Screen name={'MealDetails'} component={MealDetails} />
-        </Stack.Navigator>
-        {/*<SafeAreaView style={backgroundStyle}>*/}
-        {/*<CategoriesScreen />*/}
-        {/*</SafeAreaView>*/}
-      </NavigationContainer>
+      <FavoritesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName={'Categories'}
+            screenOptions={{
+              headerStyle: { backgroundColor: 'green' },
+              headerTintColor: 'white', // Also affects the back button
+              // contentStyle: { backgroundColor: 'black' },
+            }}>
+            <Stack.Screen
+              name="Categories2"
+              component={DrawerNavigator}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name={'Meals'}
+              component={MealsOverviewScreenScreen}
+              // options={({ route, navigation }) => {
+              //   return { title: route.params.title };
+              // }}
+            />
+            <Stack.Screen name={'MealDetails'} component={MealDetails} />
+          </Stack.Navigator>
+          {/*<SafeAreaView style={backgroundStyle}>*/}
+          {/*<CategoriesScreen />*/}
+          {/*</SafeAreaView>*/}
+        </NavigationContainer>
+      </FavoritesContextProvider>
     </>
   );
 };
