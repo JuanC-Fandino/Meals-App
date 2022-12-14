@@ -64,8 +64,6 @@ const MealDetailsScreen = (): JSX.Element => {
     return <Text>{'There is no meal'}</Text>;
   }
 
-  // useEffect(() => {});
-
   return (
     <ScrollView style={MealDetailsStyle.container} data-testid="meal-details">
       <Text style={MealDetailsStyle.title}>{TheMeal.title}</Text>
