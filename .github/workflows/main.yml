@@ -3,7 +3,9 @@ name: Move to In Review when PR is Ready for Review
 on:
   pull_request_target:
     types: [review_requested]
-
+permissions:
+  repository-projects: write
+  issues: write
 jobs:
   ready-for-review-in-progress:
     runs-on: ubuntu-latest
@@ -19,10 +21,12 @@ jobs:
           access-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Output issues
         run: echo "${{ steps.linked-issues.outputs.issues }}"
+      - name: Output test
+        run: echo "updated"
       - name: Move Issues to In Review
         uses: kin/gh-action-move-issues-to-column@v1.0
         with:
-          access-token: "#{{ secrets.GITHUB_TOKEN }}"
+          access-token: "#{{ secrets.NUEVO_SECRETO }}"
           project-name: "@JuanC-Fandino's backlog"
           target-column: "In review"
           issues: "${{ steps.linked-issues.outputs.issues }}"
