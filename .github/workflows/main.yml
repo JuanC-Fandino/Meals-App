@@ -3,7 +3,9 @@ name: Move to In Review when PR is Ready for Review
 on:
   pull_request_target:
     types: [review_requested]
-
+permissions:
+  repository-projects: write
+  issues: write
 jobs:
   ready-for-review-in-progress:
     runs-on: ubuntu-latest
