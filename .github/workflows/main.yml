@@ -21,7 +21,7 @@ jobs:
       - name: Output issues
         run: echo "${{ steps.linked-issues.outputs.issues }}"
       - name: Output test
-        run: echo "updated"
+        run: echo "updated new"
       - name: Move Issues to In Review
         uses: kin/gh-action-move-issues-to-column@v1.0
         with:
