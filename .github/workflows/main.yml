@@ -21,6 +21,8 @@ jobs:
           access-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Output issues
         run: echo "${{ steps.linked-issues.outputs.issues }}"
+      - name: Output test
+        run: echo "#{{ secrets.NUEVO_SECRETO }}"
       - name: Move Issues to In Review
         uses: kin/gh-action-move-issues-to-column@v1.0
         with:
