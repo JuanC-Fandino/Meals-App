@@ -11,10 +11,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Get Linked Issues Action
+        uses: kin/gh-action-get-linked-issues@v1.0
+        id: linked-issues
+        with:
+          # Required: personal access token with permissions to archive cards
+          access-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Output issues
+        run: echo "${{ steps.linked-issues.outputs.issues }}"
       - name: Move Issues to In Review
         uses: kin/gh-action-move-issues-to-column@v1.0
         with:
           access-token: "#{{ secrets.GITHUB_TOKEN }}"
           project-name: "@JuanC-Fandino's backlog"
-          target-column: "👀 In review"
-          issues: ${{ steps.linked-issues.outputs.issues }}
+          target-column: "In review"
+          issues: "${{ steps.linked-issues.outputs.issues }}"
