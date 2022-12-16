@@ -66,7 +66,7 @@ export const MEALS = [
       'Layer ham, the pineapple and cheese on the white bread',
       'Bake the toast for round about 10 minutes in the oven at 200°C',
     ],
-    true,
+    false,
     false,
     false,
     false,
